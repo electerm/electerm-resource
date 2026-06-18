@@ -13,7 +13,7 @@ import struct
 import io
 import os
 
-SOURCE = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048.png'
+SOURCE = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-1.png'
 APPX_DIR = '/Users/zxd/dev/electerm-resource/build-res/appx/'
 BUILD_DIR = '/Users/zxd/dev/electerm-resource/build/'
 
@@ -57,12 +57,10 @@ def create_ico(source):
 
     for ico_name in ['icons.ico', 'icons-win.ico']:
         output_path = os.path.join(BUILD_DIR, ico_name)
-        images = [resize_image(source, s) for s in ico_sizes]
-        images[0].save(
+        source.save(
             output_path,
             format='ICO',
-            sizes=[(s, s) for s in ico_sizes],
-            append_images=images[1:]
+            sizes=[(s, s) for s in ico_sizes]
         )
         print(f'Created: {output_path}')
 

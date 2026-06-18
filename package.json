@@ -1,6 +1,6 @@
 {
   "name": "@electerm/electerm-resource",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "static files of electerm",
   "main": "index.js",
   "scripts": {
