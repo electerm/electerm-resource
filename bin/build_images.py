@@ -14,8 +14,10 @@ import io
 import os
 
 SOURCE = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-1.png'
+SOURCE_NO_CORNER = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-no-corner.png'
 APPX_DIR = '/Users/zxd/dev/electerm-resource/build-res/appx/'
 BUILD_DIR = '/Users/zxd/dev/electerm-resource/build/'
+MAC_ICON_NO_CORNER_DIR = '/Users/zxd/dev/electerm-resource/mac-icon-no-corner/'
 
 
 def resize_image(source, size):
@@ -65,7 +67,7 @@ def create_ico(source):
         print(f'Created: {output_path}')
 
 
-def create_icns(source):
+def create_icns(source, output_dir=BUILD_DIR, output_name='icons.icns'):
     """Create macOS .icns file with all required sizes."""
     # ICNS icon types and their sizes
     icns_entries = [
@@ -104,7 +106,7 @@ def create_icns(source):
     file_size = len(icns_data)
     icns_data[4:8] = struct.pack('>I', file_size)
 
-    output_path = os.path.join(BUILD_DIR, 'icons.icns')
+    output_path = os.path.join(output_dir, output_name)
     with open(output_path, 'wb') as f:
         f.write(icns_data)
 
@@ -119,6 +121,12 @@ def main():
     create_appx_images(source)
     create_ico(source)
     create_icns(source)
+
+    # Build no-corner mac icon
+    print(f'\nLoading source: {SOURCE_NO_CORNER}')
+    source_no_corner = Image.open(SOURCE_NO_CORNER).convert('RGBA')
+    print(f'Source size: {source_no_corner.size}')
+    create_icns(source_no_corner, output_dir=MAC_ICON_NO_CORNER_DIR, output_name='icons.icns')
 
     print('\nDone! All images created.')
 
