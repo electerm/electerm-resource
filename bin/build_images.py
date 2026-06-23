@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Generate build images from source logo.
+Generate build images from source logos.
 Creates:
-  - build-res/appx/*.png (Windows Store icons)
-  - build/icons.icns (macOS icon)
-  - build/icons.ico (Windows icon)
-  - build/icons-win.ico (Windows icon)
+  - build-res/appx/*.png (Windows Store icons, from electerm-logo-transparent.png)
+  - build/icons.icns (macOS icon, from electerm-logo-mac.png)
+  - build/icons.ico (Windows icon, from electerm-logo-transparent.png)
+  - build/icons-win.ico (Windows icon, from electerm-logo-transparent.png)
 """
 
 from PIL import Image
@@ -13,11 +13,10 @@ import struct
 import io
 import os
 
-SOURCE = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-1.png'
-SOURCE_NO_CORNER = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-no-corner.png'
+SOURCE_MAC = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-mac.png'
+SOURCE_TRANSPARENT = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-transparent.png'
 APPX_DIR = '/Users/zxd/dev/electerm-resource/build-res/appx/'
 BUILD_DIR = '/Users/zxd/dev/electerm-resource/build/'
-MAC_ICON_NO_CORNER_DIR = '/Users/zxd/dev/electerm-resource/mac-icon-no-corner/'
 
 
 def resize_image(source, size):
@@ -114,19 +113,20 @@ def create_icns(source, output_dir=BUILD_DIR, output_name='icons.icns'):
 
 
 def main():
-    print(f'Loading source: {SOURCE}')
-    source = Image.open(SOURCE).convert('RGBA')
-    print(f'Source size: {source.size}')
+    print(f'Loading mac source: {SOURCE_MAC}')
+    source_mac = Image.open(SOURCE_MAC).convert('RGBA')
+    print(f'Source size: {source_mac.size}')
 
-    create_appx_images(source)
-    create_ico(source)
-    create_icns(source)
+    print(f'Loading transparent source: {SOURCE_TRANSPARENT}')
+    source_transparent = Image.open(SOURCE_TRANSPARENT).convert('RGBA')
+    print(f'Source size: {source_transparent.size}')
 
-    # Build no-corner mac icon
-    print(f'\nLoading source: {SOURCE_NO_CORNER}')
-    source_no_corner = Image.open(SOURCE_NO_CORNER).convert('RGBA')
-    print(f'Source size: {source_no_corner.size}')
-    create_icns(source_no_corner, output_dir=MAC_ICON_NO_CORNER_DIR, output_name='icons.icns')
+    # icns uses the mac logo
+    create_icns(source_mac)
+
+    # appx and ico/ico-win use the transparent logo
+    create_appx_images(source_transparent)
+    create_ico(source_transparent)
 
     print('\nDone! All images created.')
 

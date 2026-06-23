@@ -1,6 +1,6 @@
 {
   "name": "@electerm/electerm-resource",
-  "version": "2.0.11",
+  "version": "2.0.13",
   "description": "static files of electerm",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,6 @@
   "files": [
     "build/**/*",
     "build-res/**/*",
-    "mac-icon-no-corner/**/*",
     "res/**/*",
     "README.md",
     "package.json"
