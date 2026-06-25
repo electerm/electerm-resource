@@ -14,7 +14,7 @@ import io
 import os
 
 SOURCE_MAC = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-mac.png'
-SOURCE_TRANSPARENT = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-transparent.png'
+SOURCE_TRANSPARENT = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-1.png'
 APPX_DIR = '/Users/zxd/dev/electerm-resource/build-res/appx/'
 BUILD_DIR = '/Users/zxd/dev/electerm-resource/build/'
 
