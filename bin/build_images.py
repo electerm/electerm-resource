@@ -13,10 +13,12 @@ import struct
 import io
 import os
 
-SOURCE_MAC = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-mac.png'
-SOURCE_TRANSPARENT = '/Users/zxd/dev/electerm-resource/static/images/electerm-logo-2048-1.png'
-APPX_DIR = '/Users/zxd/dev/electerm-resource/build-res/appx/'
-BUILD_DIR = '/Users/zxd/dev/electerm-resource/build/'
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SOURCE_MAC = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-mac.png')
+SOURCE_TRANSPARENT = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-2048-1.png')
+APPX_DIR = os.path.join(_REPO_ROOT, 'build-res', 'appx')
+BUILD_DIR = os.path.join(_REPO_ROOT, 'build')
 
 
 def resize_image(source, size):
@@ -66,7 +68,9 @@ def create_ico(source):
         print(f'Created: {output_path}')
 
 
-def create_icns(source, output_dir=BUILD_DIR, output_name='icons.icns'):
+def create_icns(source, output_dir=None, output_name='icons.icns'):
+    if output_dir is None:
+        output_dir = BUILD_DIR
     """Create macOS .icns file with all required sizes."""
     # ICNS icon types and their sizes
     icns_entries = [
