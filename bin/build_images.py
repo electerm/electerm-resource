@@ -6,6 +6,8 @@ Creates:
   - build/icons.icns (macOS icon, from electerm-logo-mac.png)
   - build/icons.ico (Windows icon, from electerm-logo-transparent.png)
   - build/icons-win.ico (Windows icon, from electerm-logo-transparent.png)
+  - harmony/electerm-logo-square-216.png (HarmonyOS icon, from electerm-logo-2016-square.png)
+  - harmony/electerm-logo-square-1024.png (HarmonyOS icon, from electerm-logo-2016-square.png)
 """
 
 from PIL import Image
@@ -17,8 +19,10 @@ _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SOURCE_MAC = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-mac.png')
 SOURCE_TRANSPARENT = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-2048-1.png')
+SOURCE_SQUARE_2016 = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-2016-square.png')
 APPX_DIR = os.path.join(_REPO_ROOT, 'build-res', 'appx')
 BUILD_DIR = os.path.join(_REPO_ROOT, 'build')
+HARMONY_DIR = os.path.join(_REPO_ROOT, 'harmony')
 
 
 def resize_image(source, size):
@@ -50,6 +54,22 @@ def create_appx_images(source):
             img = resize_image(source, size)
 
         output_path = os.path.join(APPX_DIR, filename)
+        img.save(output_path, 'PNG')
+        print(f'Created: {output_path} ({img.size[0]}x{img.size[1]})')
+
+
+def create_harmony_images(source):
+    """Create HarmonyOS square logo PNG images."""
+    harmony_specs = [
+        ('electerm-logo-square-216.png', 216),
+        ('electerm-logo-square-1024.png', 1024),
+    ]
+
+    os.makedirs(HARMONY_DIR, exist_ok=True)
+
+    for filename, size in harmony_specs:
+        img = resize_image(source, size)
+        output_path = os.path.join(HARMONY_DIR, filename)
         img.save(output_path, 'PNG')
         print(f'Created: {output_path} ({img.size[0]}x{img.size[1]})')
 
@@ -125,12 +145,19 @@ def main():
     source_transparent = Image.open(SOURCE_TRANSPARENT).convert('RGBA')
     print(f'Source size: {source_transparent.size}')
 
+    print(f'Loading square 2016 source: {SOURCE_SQUARE_2016}')
+    source_square_2016 = Image.open(SOURCE_SQUARE_2016).convert('RGBA')
+    print(f'Source size: {source_square_2016.size}')
+
     # icns uses the mac logo
     create_icns(source_mac)
 
     # appx and ico/ico-win use the transparent logo
     create_appx_images(source_transparent)
     create_ico(source_transparent)
+
+    # harmony uses the 2016 square logo
+    create_harmony_images(source_square_2016)
 
     print('\nDone! All images created.')
 
