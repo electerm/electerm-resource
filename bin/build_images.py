@@ -8,6 +8,7 @@ Creates:
   - build/icons-win.ico (Windows icon, from electerm-logo-transparent.png)
   - harmony/electerm-logo-square-216.png (HarmonyOS icon, from electerm-logo-2016-square.png)
   - harmony/electerm-logo-square-1024.png (HarmonyOS icon, from electerm-logo-2016-square.png)
+  - build-res/linux/*.png (Linux app icons, e.g. .deb/.AppImage, from electerm-logo-2016-square.png)
 """
 
 from PIL import Image
@@ -21,6 +22,7 @@ SOURCE_MAC = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-mac.png
 SOURCE_TRANSPARENT = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-2048-1.png')
 SOURCE_SQUARE_2016 = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-2016-square.png')
 APPX_DIR = os.path.join(_REPO_ROOT, 'build-res', 'appx')
+LINUX_DIR = os.path.join(_REPO_ROOT, 'build-res', 'linux')
 BUILD_DIR = os.path.join(_REPO_ROOT, 'build')
 HARMONY_DIR = os.path.join(_REPO_ROOT, 'harmony')
 
@@ -70,6 +72,34 @@ def create_harmony_images(source):
     for filename, size in harmony_specs:
         img = resize_image(source, size)
         output_path = os.path.join(HARMONY_DIR, filename)
+        img.save(output_path, 'PNG')
+        print(f'Created: {output_path} ({img.size[0]}x{img.size[1]})')
+
+
+def create_linux_images(source):
+    """Create Linux app icon PNGs (electron-builder/freedesktop icon set).
+
+    Used for .deb, .rpm, .AppImage and other Linux targets. The set follows
+    the standard freedesktop sizes electron-builder reads from build/icons.
+    """
+    linux_specs = [
+        ('16x16.png', 16),
+        ('24x24.png', 24),
+        ('32x32.png', 32),
+        ('48x48.png', 48),
+        ('64x64.png', 64),
+        ('128x128.png', 128),
+        ('128x128@2x.png', 256),
+        ('256x256.png', 256),
+        ('512x512.png', 512),
+        ('1024x1024.png', 1024),
+    ]
+
+    os.makedirs(LINUX_DIR, exist_ok=True)
+
+    for filename, size in linux_specs:
+        img = resize_image(source, size)
+        output_path = os.path.join(LINUX_DIR, filename)
         img.save(output_path, 'PNG')
         print(f'Created: {output_path} ({img.size[0]}x{img.size[1]})')
 
@@ -158,6 +188,9 @@ def main():
 
     # harmony uses the 2016 square logo
     create_harmony_images(source_square_2016)
+
+    # linux app icons (.deb/.AppImage) use the 2016 square logo
+    create_linux_images(source_transparent)
 
     print('\nDone! All images created.')
 
