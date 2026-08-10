@@ -2,13 +2,14 @@
 """
 Generate build images from source logos.
 Creates:
-  - build-res/appx/*.png (Windows Store icons, from electerm-logo-transparent.png)
+    - build-res/appx/*.png (Windows Store icons, from electerm-logo-transparent.png)
   - build/icons.icns (macOS icon, from electerm-logo-mac.png)
   - build/icons.ico (Windows icon, from electerm-logo-transparent.png)
   - build/icons-win.ico (Windows icon, from electerm-logo-transparent.png)
   - harmony/electerm-logo-square-216.png (HarmonyOS icon, from electerm-logo-2016-square.png)
   - harmony/electerm-logo-square-1024.png (HarmonyOS icon, from electerm-logo-2016-square.png)
   - build-res/linux/*.png (Linux app icons, e.g. .deb/.AppImage, from electerm-logo-2016-square.png)
+  - build-res/ios/AppIcon-1024x1024.png (iOS App Store icon, from electerm-logo-2016-square.png)
 """
 
 from PIL import Image
@@ -23,6 +24,7 @@ SOURCE_TRANSPARENT = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo
 SOURCE_SQUARE_2016 = os.path.join(_REPO_ROOT, 'static', 'images', 'electerm-logo-2016-square.png')
 APPX_DIR = os.path.join(_REPO_ROOT, 'build-res', 'appx')
 LINUX_DIR = os.path.join(_REPO_ROOT, 'build-res', 'linux')
+IOS_DIR = os.path.join(_REPO_ROOT, 'build-res', 'ios')
 BUILD_DIR = os.path.join(_REPO_ROOT, 'build')
 HARMONY_DIR = os.path.join(_REPO_ROOT, 'harmony')
 
@@ -101,6 +103,31 @@ def create_linux_images(source):
         output_path = os.path.join(LINUX_DIR, filename)
         img.save(output_path, 'PNG')
         print(f'Created: {output_path} ({img.size[0]}x{img.size[1]})')
+
+
+def create_ios_images(source):
+    """Create iOS App Store icon PNG.
+
+    iOS requires a single 1024x1024 PNG with no transparency (solid background)
+    and no rounded corners (iOS applies the mask automatically). The source
+    square logo (electerm-logo-2016-square.png) is RGB with a solid background,
+    which is exactly what iOS expects.
+    """
+    os.makedirs(IOS_DIR, exist_ok=True)
+
+    img = resize_image(source, 1024)
+    # Flatten to RGB (remove any alpha channel) — iOS rejects icons with
+    # transparency.
+    if img.mode == 'RGBA':
+        background = Image.new('RGB', img.size, (255, 255, 255))
+        background.paste(img, mask=img.split()[3])
+        img = background
+    else:
+        img = img.convert('RGB')
+
+    output_path = os.path.join(IOS_DIR, 'AppIcon-1024x1024.png')
+    img.save(output_path, 'PNG')
+    print(f'Created: {output_path} ({img.size[0]}x{img.size[1]})')
 
 
 def create_ico(source):
@@ -190,6 +217,9 @@ def main():
 
     # linux app icons (.deb/.AppImage) use the 2016 square logo
     create_linux_images(source_transparent)
+
+    # iOS App Store icon uses the 2016 square logo (solid background, no alpha)
+    create_ios_images(source_square_2016)
 
     print('\nDone! All images created.')
 
