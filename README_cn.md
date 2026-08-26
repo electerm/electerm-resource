@@ -12,9 +12,9 @@
 
 ## 关于 electerm
 
-electerm 是一款开源的终端 / SSH / SFTP / FTP / Telnet / 串口 / RDP / VNC / Spice 客户端，支持 Linux、macOS、Windows、Android 与 HarmonyOS 等平台。
+electerm 是一款开源的终端 / SSH / SFTP / FTP / Telnet / 串口 / RDP / VNC / Spice 客户端，支持 Linux、macOS、Windows、Android、HarmonyOS 与 iOS 等平台。
 
-除主流的 Windows / macOS / Linux / Android 外，electerm 还支持 HarmonyOS，以及较老的系统，如 Ubuntu 18、Windows 7、macOS 10+，以及 UOS、麒麟、龙架构（LoongArch，新旧世界）等国产 Linux 发行版。
+除主流的 Windows / macOS / Linux / Android 外，electerm 还支持 HarmonyOS、iOS，以及较老的系统，如 Ubuntu 18、Windows 7、macOS 10+，以及 UOS、麒麟、龙架构（LoongArch，新旧世界）等国产 Linux 发行版。
 
 ## 相关项目/站点
 
@@ -24,6 +24,7 @@ electerm 是一款开源的终端 / SSH / SFTP / FTP / Telnet / 串口 / RDP / V
 - [electerm-web-docker](https://github.com/electerm/electerm-web-docker)：electerm-web 的 docker 镜像
 - [electerm-android](https://github.com/electerm/electerm-android)：安卓端应用
 - [electerm-harmony](https://github.com/electerm/electerm-harmony)：鸿蒙端应用
+- [electerm-ios](https://github.com/electerm/electerm-ios)：iOS 端应用
 - [electerm online](https://cloud.electerm.org)：公共免费在线 electerm 应用
 - [electerm AI](https://ai.electerm.org)：面向 electerm 用户的免费 AI
 - [theme.electerm.org](https://theme.electerm.org)：主题在线编辑、实时预览与分享
@@ -31,6 +32,7 @@ electerm 是一款开源的终端 / SSH / SFTP / FTP / Telnet / 串口 / RDP / V
 - [electerm deb repo](https://repos.electerm.org/deb)：Debian 软件源
 - [electerm rpm repo](https://repos.electerm.org/rpm)：RPM 软件源
 - [electerm-locales](https://github.com/electerm/electerm-locales)：多语言/国际化文件
+- [Apple App Store](https://apps.apple.com/cn/app/electerm/id6792971552)
 - [华为应用市场](https://appgallery.huawei.com/app/detail?id=org.electerm.electerm)
 - [Microsoft Store](https://www.microsoft.com/store/apps/9NCN7272GTFF)
 - [Snap Store](https://snapcraft.io/electerm)
