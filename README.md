@@ -32,7 +32,7 @@ Besides the mainstream Windows / macOS / Linux / Android platforms, electerm als
 - [electerm deb repo](https://repos.electerm.org/deb): Debian repo of electerm
 - [electerm rpm repo](https://repos.electerm.org/rpm): RPM repo of electerm
 - [electerm-locales](https://github.com/electerm/electerm-locales): Language/i18n files for electerm
-- [Apple App Store](https://apps.apple.com/cn/app/electerm/id6792971552)
+- [Apple App Store](https://apps.apple.com/us/app/electerm/id6792971552)
 - [Huawei AppGallery](https://appgallery.huawei.com/app/detail?id=org.electerm.electerm)
 - [Microsoft Store](https://www.microsoft.com/store/apps/9NCN7272GTFF)
 - [Snap Store](https://snapcraft.io/electerm)
